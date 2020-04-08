@@ -1,0 +1,235 @@
+*{
+	font-family: Arial;	/* Set font for entire page: https://stackoverflow.com/questions/10041706/applying-a-single-font-to-an-entire-website-with-css */
+}
+
+h1 {
+  text-align: center;
+  margin-block-start: 5px;
+  margin-block-end: 2px;
+}
+img {
+  padding: 3px;
+}
+
+button {
+	display: block;
+	padding: 2px;
+	margin-left: auto;	/* centre it horizontally */
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 1em;
+}
+
+.C500 {
+  display: inline-block;
+  height: 810px;
+  width: 900px;
+  background: #eee;
+}
+
+.opponents {
+	text-align: center;
+	padding: 5px 1px 5px 1px;
+	margin-left: auto;	/* centre it horizontally */
+	margin-right: auto;
+}
+
+.opponent {
+  display: inline-block;
+  height: 85px;
+  width: 160px;
+  padding: 2px;
+  border: 4px solid #999;
+  margin: 2px 8px 2px 8px; 
+}
+
+.OpponentName {
+  padding-bottom: 0px;
+  width: 150px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  text-align: center;
+  outline: none;	/* remove blue line around input field when selected.  https://stackoverflow.com/questions/1457849/how-to-remove-the-border-highlight-on-an-input-text-element*/
+}
+
+.heading {
+  font-size: 1.2em;	
+  text-align: center;
+  font-weight: bold;
+  padding: 4px;
+}  
+
+.noTricks, .noCards {
+  font-size: 1.2em;	
+  text-align: center;
+  font-weight: normal;
+  padding: 4px;
+}
+
+.playCards {
+  display: inline-block;
+  height: 190px;
+  width: 180px;
+  background: #ddd;
+  border: 2px solid #999;
+}  
+
+.kitty {
+  display: inline-block;
+  height: 150px;
+  width: 120px;
+}
+
+.buttons {
+  display: inline-block;
+  height: 150px;
+  width: 180px;
+}
+
+.player {
+  display: inline-block;
+  vertical-align: top;
+  height: 300px;
+  width: 880px;
+  padding: 2px;
+  border: 4px solid #999;
+  margin: 2px;
+}
+
+.nameEntry {
+  padding-bottom: 0px;
+  width: 860px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  text-align: center;
+  outline: none;	/* remove blue line around input field when selected.  https://stackoverflow.com/questions/1457849/how-to-remove-the-border-highlight-on-an-input-text-element*/
+}
+
+.Player0 {
+  background: #5e65ec;
+}
+
+.Player1 {
+  background: #eb529e;
+}
+
+.Player2 {
+  background: #6de758;
+}
+
+.Player3 {
+  background: #f8ce29;
+}
+
+.Player4 {
+  background: #fa8045;
+}
+
+.card {
+  display: inline-block;
+  padding: 0px;
+  border: 0px solid #fff;
+  margin: 1px 1px 1px 1px;
+  cursor: move;	/* change the cursor style http://www.javascripter.net/faq/stylesc.htm*/
+  width: 79px;
+  height: 103px;
+}
+
+.helpText {
+  flex: 1;
+  display: inline-block;
+  text-align: center;
+  width: 160px;
+  font-size: 1.8em;
+}
+
+.helpLine {
+	font-size: 1em;
+}
+
+.playedCards {
+  position: relative;	/* make this the parent to which the cards are offset from */
+}
+
+.kittyCards {
+  pointer-events: none;
+  position: relative;	/* make this the parent to which the cards are offset from */
+}
+
+.actionsarea {
+  display: inline-block;
+  vertical-align: top;
+  height: 180px;
+  width: 300px;
+  padding: 2px;
+  border: 4px solid #999;
+  margin: 2px;
+}
+
+.offset1 {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+}
+
+.offset2 {
+  position: absolute;
+  top: 18px;
+  left: 26px;
+}
+
+.playoffset1 {
+  position: absolute;
+  top: 11px;
+  left: 17px;
+}
+
+.playoffset2 {
+  position: absolute;
+  top: 22px;
+  left: 34px;
+}
+
+.playoffset3 {
+  position: absolute;
+  top: 33px;
+  left: 51px;
+}
+
+.playoffset4 {
+  position: absolute;
+  top: 44px;
+  left: 68px;
+}
+
+.playoffset5 {
+  position: absolute;
+  top: 55px;
+  left: 81px;
+}
+
+.drawPile {
+  padding-left: 20px;
+  display: inline-block;
+}
+
+.action {
+	font-size: 0.8em;	
+}
+
+.notDragTarget {
+  pointer-events: none;
+}
+
+.draggable {
+  position: absolute;
+  pointer-events: none;
+}
+
+.card.draggable {	/* https://stackoverflow.com/questions/11918491/using-two-css-classes-on-one-element, https://www.w3.org/TR/selectors-3/#specificity*/
+  padding: 7px;
+}
+

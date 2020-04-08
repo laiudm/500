@@ -1,0 +1,20 @@
+{
+  "name": "laiudm",
+  "version": "1.0.0",
+  "description": "500 online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/laiudm/500"
+  },
+  "author": "laiudm",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "socket.io": "^2.3.0"
+  }
+}
