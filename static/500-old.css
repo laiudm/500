@@ -46,7 +46,7 @@ button {
 	align-items: flex-start;	
 }
 
-.Opponent {
+.opponent {
   display: inline-block;
   height: 85px;
   width: 160px;
@@ -181,6 +181,18 @@ button {
   margin: 2px;
 }
 
+.offset1 {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+}
+
+.offset2 {
+  position: absolute;
+  top: 18px;
+  left: 26px;
+}
+
 .playoffset1 {
   position: absolute;
   top: 11px;
@@ -211,8 +223,17 @@ button {
   left: 81px;
 }
 
+.drawPile {
+  padding-left: 20px;
+  display: inline-block;
+}
+
 .action {
 	font-size: 0.8em;	
+}
+
+.notDragTarget {
+  pointer-events: none;
 }
 
 .draggable {

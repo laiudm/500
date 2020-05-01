@@ -43,7 +43,7 @@ function removeMultipleFromArray(array, values) {
 // 500 Game Code
 
 // Connection Management
-var players = {};		// each client connection, keyed by the socket.id. Hard coded for 5 players currently.
+var players = {};		// each client connection, keyed by the socket.id. 
 var playerIDs = fillArrayWithRange(0, 5);	// allocated ids from this 'stack', and return them when the connection closes
 
 var playerNames = ['nc', 'nc', 'nc', 'nc', 'nc', ];	// don't undo play name changes
@@ -52,12 +52,20 @@ var actions = [];	// don't undo actions; instead log the undo operation
 
 // State Management - do/undo:
 // Current State - able to be undone with undo button:
-var cards = [];		// cards currently held by each player
+var cards = [];		// cards currently held by each player. Always assumes 5 players; indexed by playerID
 var kitty = [];		// cards that have been discarded
 var played = [];	// the cards played towards the current trick
 var playerTricks = [];	// 
 var showAllCards = false;	// true when the game is over
 var showKitty = false;
+
+function playerPresent(id) {
+	for (let skt in players) {	// players is keyed by socket.id
+		player = players[skt];
+		if (player.id == id) return true;
+	}
+	return false;
+}
 
 var stateHistory = [];	// where state changes are saved and restored from
 
@@ -79,7 +87,7 @@ function saveState() {
 function restoreState() {
 	if (stateHistory.length > 0) {
 		lastState = stateHistory.pop();
-		console.log(`restoring. history is now ${stateHistory.length} long`);
+		//console.log(`restoring. history is now ${stateHistory.length} long`);
 		cards = lastState.cards;
 		kitty = lastState.kitty;
 		played = lastState.played;
@@ -88,8 +96,6 @@ function restoreState() {
 		showKitty = lastState.showKitty;
 	}
 }
-		
-	
 
 function addAction(action) {
 	while (actions.length > 10) {	// remove oldest first
@@ -126,21 +132,28 @@ function shuffle() {
 	let cardDeck = fillArrayWithRange(0, 53).map( c => (mapCardToName(c)));	// cards start at no. 1, joker is included
 	
 	// if 4 are playing, remove some cards
-	//cardDeck = removeMultipleFromArray(cardDeck, ['2s','3s','4s', '2c', '3c', '4c', '2d', '3d', '2h', '3h']);
+	let noPlayers = Object.keys(players).length;
+	console.log('Shuffling, no. connected: ' + noPlayers);
+	if (noPlayers == 4) {
+		cardDeck = removeMultipleFromArray(cardDeck, ['2s','3s','4s', '2c', '3c', '4c', '2d', '3d', '2h', '3h']);
+	}
 	cardDeck = shuffleDeck(cardDeck);
-	cards = range(0, 5).map( c => 
-		(range(0, 10).map( e => (cardDeck.pop()) ) ) 
+	
+	//restrict which hands are deal to depending on which playerIDs are connected.
+	cards = range(0, 5).map( p => 
+		playerPresent(p) 
+		? (range(0, 10).map( c => (cardDeck.pop()) ) ) 
+		: []
 		);
 
 	kitty = range(0, 3).map( e => (cardDeck.pop()) );
 
 	if (cardDeck.length != 0) {
-		console.log('Oops - card deck wrong: ' + util.inspect(cardDeck));
+		//console.log('Oops - card deck wrong: ' + util.inspect(cardDeck));
+		console.log('Oops - card deck wrong. Remaining cards: ' + cardDeck.length);
 	}
 	played = [];	// {card: 'ah', player: 1}, {card: 'ad', player: 0}, {card: 'ac', player: 0}
 	playerTricks = [0, 0, 0, 0, 0];
-	
-	//console.log('Hands dealt: ' + JSON.stringify(cards));
 }
 
 shuffle();
@@ -169,10 +182,14 @@ function sendState() {
 		server.me = {cards: cards[playerID], noTricks: playerTricks[playerID], playerID: playerID};
 		server.kitty = kitty.map( c => ( showKitty ? c : 'b'));
 		server.opponents = [];
+		
 		for (let i=1; i<5; i++) {
 			let offset = (playerID + i) % 5;
-			let opponent = {name: playerNames[offset], noCards: cards[offset].length, noTricks: playerTricks[offset], playerID: offset};
-			server.opponents.push(opponent);
+			// Only generate an opponent {} if a player with that ID is connected.
+			if (playerPresent(offset)) {
+				let opponent = {name: playerNames[offset], noCards: cards[offset].length, noTricks: playerTricks[offset], playerID: offset};
+				server.opponents.push(opponent);
+			}
 		}
 		
 		server.played = played;
